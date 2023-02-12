@@ -1,30 +1,43 @@
-<script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
-</script>
-
 <template>
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
+  <div v-if="!groups.length">
+    <AddGroup :groups="groups" />
   </div>
-  <HelloWorld msg="Vite + Vue" />
-</template>
 
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
-</style>
+  <div v-if="selectedGroup">
+    <GroupView :group="selectedGroup" @updateGroup="onUpdateGroup" />
+  </div>
+</template>
+<script setup lang="ts">
+import { onMounted, ref } from "vue";
+import { Group } from "./model/group";
+
+const groups = ref<Group[]>([]);
+
+const selectedGroup = ref<Group | null>(null);
+
+onMounted(() => {
+  groups.value = getAllGroupsFromStorage();
+  selectedGroup.value = groups.value[0];
+
+  console.log(selectedGroup.value);
+});
+
+const getAllGroupsFromStorage = () => {
+  const groups = localStorage.getItem("groups");
+  if (groups) {
+    return JSON.parse(groups);
+  }
+  return [];
+};
+
+const onUpdateGroup = (group: Group) => {
+  const groupIndex = groups.value.findIndex((g) => {
+    return g.id === group.id;
+  });
+  let newGroups = [...groups.value];
+  newGroups[groupIndex] = { ...group };
+  groups.value = newGroups;
+  localStorage.setItem("groups", JSON.stringify(newGroups));
+  location.reload();
+};
+</script>
