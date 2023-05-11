@@ -1,5 +1,5 @@
 <template>
-  <div v-if="component === 'main'">
+  <div>
     <h1>{{ group.name }}</h1>
 
     <button @click="toggle = !toggle">
@@ -29,62 +29,19 @@
     </div>
   </div>
 
-  <div v-if="component === 'main'">
-    <button @click="component = 'add-member'">Add Member</button>
-    <button @click="component = 'add-tr'">Add Transaction</button>
-  </div>
-
-  <div v-if="component === 'add-member'">
-    <input
-      v-model="memberName"
-      type="text"
-      name="member_name"
-      placeholder="Enter member name"
-    />
-
-    <button @click="addMember">Add</button>
-  </div>
-
-  <div v-if="component === 'add-tr'">
-    <input
-      v-model="memberName"
-      type="text"
-      name="member_name"
-      placeholder="Enter member name"
-    />
-
-    <button @click="addMember">Add</button>
+  <div>
+    <a href="/members/add">Add Member</a>
+    <a href="/transactions/add">Add Transaction</a>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from "vue";
-import { Group } from "../helpers/model/group";
 import { useGroupStore } from "../helpers/stores/GroupStore";
 
 const groupStore = useGroupStore();
 
+const group = groupStore.currentGroup!;
+
 const toggle = ref(false);
-
-const component = ref<"main" | "add-member" | "add-tr">("main");
-
-const props = defineProps<{
-  group: Group;
-}>();
-
-const emits = defineEmits(["updateGroup"]);
-
-const memberName = ref("");
-
-const addMember = () => {
-  if (!memberName.value) return alert("Please enter a name");
-
-  const member = {
-    name: memberName.value,
-    id: Date.now().toString(),
-  };
-
-  groupStore.addMember(member);
-  component.value = "main";
-};
 </script>
