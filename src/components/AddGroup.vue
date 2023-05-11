@@ -11,8 +11,8 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import { Group } from "../model/group";
-import { useGroupStore } from "../stores/GroupStore";
+import { Group } from "../helpers/model/group";
+import { useGroupStore } from "../helpers/stores/GroupStore";
 const { addGroup } = useGroupStore();
 
 const props = defineProps<{

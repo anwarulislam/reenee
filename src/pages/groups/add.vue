@@ -1,0 +1,3 @@
+<template>
+  <AddGroup />
+</template>

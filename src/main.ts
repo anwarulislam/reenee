@@ -3,7 +3,7 @@ import "./style.css";
 import { VueFire, VueFireAuth } from "vuefire";
 import App from "./App.vue";
 // the file we created above with `database`, `firestore` and other exports
-import { firebaseApp } from "./firebase";
+import { firebaseApp } from "./helpers/firebase";
 
 import {
   createRouter,
