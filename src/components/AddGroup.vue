@@ -6,12 +6,14 @@
     placeholder="Enter group name"
   />
 
-  <button @click="addGroup">Add</button>
+  <button @click="addNewGroup">Add</button>
 </template>
 
 <script setup lang="ts">
 import { ref } from "vue";
 import { Group } from "../model/group";
+import { useGroupStore } from "../stores/GroupStore";
+const { addGroup } = useGroupStore();
 
 const props = defineProps<{
   groups: Group[];
@@ -19,7 +21,7 @@ const props = defineProps<{
 
 const groupName = ref("");
 
-const addGroup = () => {
+const addNewGroup = () => {
   const group: Group = {
     name: groupName.value,
     id: Date.now().toString(),
@@ -27,9 +29,6 @@ const addGroup = () => {
     transactions: [],
   };
 
-  const payload = [...props.groups, group];
-
-  localStorage.setItem("groups", JSON.stringify(payload));
-  location.reload();
+  addGroup(group);
 };
 </script>

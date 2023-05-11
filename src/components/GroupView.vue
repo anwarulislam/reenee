@@ -23,7 +23,7 @@
 
       <ul>
         <li v-for="transaction in group.transactions" :key="transaction.id">
-          {{ transaction.name }}
+          {{ transaction.title }}
         </li>
       </ul>
     </div>
@@ -60,6 +60,9 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { Group } from "../model/group";
+import { useGroupStore } from "../stores/GroupStore";
+
+const groupStore = useGroupStore();
 
 const toggle = ref(false);
 
@@ -81,11 +84,7 @@ const addMember = () => {
     id: Date.now().toString(),
   };
 
-  const payload = {
-    ...props.group,
-    members: [...props.group.members, member],
-  };
-
-  emits("updateGroup", payload);
+  groupStore.addMember(member);
+  component.value = "main";
 };
 </script>

@@ -11,5 +11,7 @@ declare module '@vue/runtime-core' {
     GroupView: typeof import('./components/GroupView.vue')['default']
     Person: typeof import('./components/Person.vue')['default']
     Persons: typeof import('./components/Persons.vue')['default']
+    RouterLink: typeof import('vue-router')['RouterLink']
+    RouterView: typeof import('vue-router')['RouterView']
   }
 }
