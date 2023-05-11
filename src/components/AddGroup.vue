@@ -1,23 +1,21 @@
 <template>
-  <input
-    v-model="groupName"
-    type="text"
-    name="group_name"
-    placeholder="Enter group name"
-  />
+  <form @submit.prevent="addNewGroup">
+    <input
+      v-model="groupName"
+      type="text"
+      name="group_name"
+      placeholder="Enter group name"
+    />
 
-  <button @click="addNewGroup">Add</button>
+    <button type="submit">Add</button>
+  </form>
 </template>
 
 <script setup lang="ts">
 import { ref } from "vue";
 import { Group } from "../helpers/model/group";
-import { useGroupStore } from "../helpers/stores/GroupStore";
+import { useGroupStore } from "../helpers/stores/AppStore";
 const { addGroup } = useGroupStore();
-
-const props = defineProps<{
-  groups: Group[];
-}>();
 
 const groupName = ref("");
 

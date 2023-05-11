@@ -1,5 +1,5 @@
 <template>
-  <a href="/groups/add"> Add Group </a>
+  <RouterLink to="/groups/add"> Add Group </RouterLink>
 
   <div v-if="selectedGroup">
     <GroupView :group="selectedGroup" />
@@ -8,9 +8,9 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { Group } from "../helpers/model/group";
-import { useGroupStore } from "../helpers/stores/GroupStore";
+import { useAppStore } from "../helpers/stores/AppStore";
 
-const groupStore = useGroupStore();
+const groupStore = useAppStore();
 
 const selectedGroup = ref<Group | null>(groupStore.currentGroup);
 </script>

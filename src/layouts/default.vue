@@ -1,7 +1,7 @@
 <template>
   <main class="flex flex-1 w-full" role="main">
     <RouterView v-slot="{ Component }" class="flex flex-1">
-      <Transition name="fade" mode="out-in" appear>
+      <Transition name="fade" appear>
         <component :is="Component" />
       </Transition>
     </RouterView>
@@ -9,5 +9,5 @@
 </template>
 
 <script setup lang="ts">
-import { RouterView, useRouter } from "vue-router";
+import { RouterView } from "vue-router";
 </script>

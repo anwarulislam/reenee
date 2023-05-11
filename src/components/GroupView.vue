@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="group">
     <h1>{{ group.name }}</h1>
 
     <button @click="toggle = !toggle">
@@ -13,6 +13,7 @@
         <Person
           v-for="member in group.members"
           :key="member.id"
+          :pid="member.id"
           :name="member.name"
         />
       </Persons>
@@ -30,8 +31,8 @@
   </div>
 
   <div>
-    <a href="/members/add">Add Member</a>
-    <a href="/transactions/add">Add Transaction</a>
+    <RouterLink to="/members/add"> Add Member </RouterLink>
+    <RouterLink to="/transactions/add"> Add Transaction </RouterLink>
   </div>
 </template>
 
@@ -41,7 +42,7 @@ import { useGroupStore } from "../helpers/stores/GroupStore";
 
 const groupStore = useGroupStore();
 
-const group = groupStore.currentGroup!;
+const group = groupStore;
 
 const toggle = ref(false);
 </script>

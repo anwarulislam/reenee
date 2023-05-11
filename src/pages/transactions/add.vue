@@ -1,8 +1,14 @@
 <template>
-  <input v-model="transactionDetail" type="text" placeholder="Enter details" />
-  <input v-model="amount" type="text" placeholder="Enter amount" />
+  <form @submit.prevent="addTransaction">
+    <input
+      v-model="transactionDetail"
+      type="text"
+      placeholder="Enter details"
+    />
+    <input v-model="amount" type="text" placeholder="Enter amount" />
 
-  <button @click="addTransaction">Add</button>
+    <button type="submit">Add</button>
+  </form>
 </template>
 
 <script setup lang="ts">
