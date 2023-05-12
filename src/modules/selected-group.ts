@@ -1,5 +1,5 @@
-import { useAppStore } from "../helpers/stores/AppStore";
 import { ReeneeModule } from ".";
+import { useAppStore } from "../helpers/stores/AppStore";
 
 /**
  * @function
@@ -13,14 +13,13 @@ import { ReeneeModule } from ".";
 export default <ReeneeModule>{
   onBeforeRouteChange(to, from, next, router) {
     const appStore = useAppStore();
-    console.log(to);
 
-    if (to.name === "groups-id") {
+    if (to.name?.toString().includes("groups-id")) {
       appStore.setCurrentGroupId(to.params.id.toString());
     }
 
     if (to.name === "index") {
-      return router.replace(`groups/${appStore.currentGroupId}`);
+      return router.replace(`/groups/${appStore.currentGroupId}`);
     }
 
     next();

@@ -12,7 +12,8 @@ export const useGroupStore = defineStore({
     transactions: <Transaction[]>[],
   }),
   actions: {
-    setGroup(group: Group) {
+    setGroup(group: Group | null) {
+      if (!group) return;
       this.id = group.id;
       this.name = group.name;
       this.members = group.members;
@@ -22,7 +23,12 @@ export const useGroupStore = defineStore({
       this.members.push(member);
     },
     deleteMember(id: string) {
-      this.members = this.members.filter((m) => m.id !== id);
+      console.log(this.members.filter((m) => m.id != id));
+      this.members = this.members.filter((m) => m.id != id);
+    },
+    getMember(id: string) {
+      console.log(this.members.find((m) => m.id == id));
+      return this.members.find((m) => m.id == id)!;
     },
   },
 });

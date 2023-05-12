@@ -13,6 +13,7 @@
         <Person
           v-for="member in group.members"
           :key="member.id"
+          :groupId="groupId"
           :pid="member.id"
           :name="member.name"
         />
@@ -31,18 +32,25 @@
   </div>
 
   <div>
-    <RouterLink to="members/add"> Add Member </RouterLink>
-    <RouterLink to="transactions/add"> Add Transaction </RouterLink>
+    <RouterLink :to="groupId + '/members/add'"> Add Member </RouterLink>
+    <RouterLink :to="groupId + '/transactions/add'">
+      Add Transaction
+    </RouterLink>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from "vue";
 import { useGroupStore } from "../helpers/stores/GroupStore";
+import { useRoute } from "vue-router";
 
 const groupStore = useGroupStore();
 
 const group = groupStore;
 
 const toggle = ref(false);
+
+const route = useRoute();
+
+const groupId = route.params.id.toString();
 </script>
