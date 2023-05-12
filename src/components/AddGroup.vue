@@ -14,10 +14,13 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { Group } from "../helpers/model/group";
-import { useGroupStore } from "../helpers/stores/AppStore";
-const { addGroup } = useGroupStore();
+import { useAppStore } from "../helpers/stores/AppStore";
+import { useRouter } from "vue-router";
+const { addGroup, setCurrentGroupId } = useAppStore();
 
 const groupName = ref("");
+
+const router = useRouter();
 
 const addNewGroup = () => {
   const group: Group = {
@@ -28,5 +31,9 @@ const addNewGroup = () => {
   };
 
   addGroup(group);
+
+  setCurrentGroupId(group.id);
+
+  router.push("/groups");
 };
 </script>

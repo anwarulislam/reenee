@@ -12,7 +12,7 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import { useGroupStore } from "../../helpers/stores/GroupStore";
+import { useGroupStore } from "~/helpers/stores/GroupStore";
 import { useRouter } from "vue-router";
 
 const router = useRouter();

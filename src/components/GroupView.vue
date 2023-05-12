@@ -31,8 +31,8 @@
   </div>
 
   <div>
-    <RouterLink to="/members/add"> Add Member </RouterLink>
-    <RouterLink to="/transactions/add"> Add Transaction </RouterLink>
+    <RouterLink to="members/add"> Add Member </RouterLink>
+    <RouterLink to="transactions/add"> Add Transaction </RouterLink>
   </div>
 </template>
 

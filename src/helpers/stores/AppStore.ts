@@ -33,21 +33,5 @@ export const useAppStore = defineStore({
     setCurrentGroupId(groupId: string) {
       this.currentGroupId = groupId;
     },
-    addMember(member: Member) {
-      console.log("addMember", this.groups);
-      const currentGroupIndex = this.groups.findIndex(
-        (group) => group.id === this.currentGroupId
-      );
-      this.groups[currentGroupIndex].members.push(member);
-    },
-    deleteMember(id: string) {
-      console.log(id);
-      const currentGroupIndex = this.groups.findIndex(
-        (group) => group.id === this.currentGroupId
-      );
-      this.groups[currentGroupIndex].members = this.groups[
-        currentGroupIndex
-      ].members.filter((m) => m.id !== id);
-    },
   },
 });

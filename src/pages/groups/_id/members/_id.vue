@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 import { useRoute, useRouter } from "vue-router";
-import { useGroupStore } from "../../helpers/stores/GroupStore";
+import { useGroupStore } from "~/helpers/stores/GroupStore";
 
 const route = useRoute();
 const router = useRouter();
