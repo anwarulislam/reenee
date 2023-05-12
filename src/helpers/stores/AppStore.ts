@@ -14,7 +14,6 @@ export const useAppStore = defineStore({
     },
     currentGroup(): Group | null {
       if (this.currentGroupId) {
-        console.log(this.groups);
         return (
           this.groups?.find((group) => group.id === this.currentGroupId) || null
         );
@@ -23,15 +22,20 @@ export const useAppStore = defineStore({
     },
   },
   actions: {
+    initialize(state: any) {
+      this.setGroups(state?.groups || []);
+      this.setCurrentGroupId(
+        state?.currentGroupId || state?.groups[0]?.id || null
+      );
+    },
     setGroups(groups: Group[]) {
-      console.log(groups);
       this.groups = groups;
     },
     addGroup(group: Group) {
       this.groups.push(group);
     },
     setCurrentGroupId(groupId: string) {
-      this.currentGroupId = groupId;
+      if (this.currentGroupId !== groupId) this.currentGroupId = groupId;
     },
   },
 });

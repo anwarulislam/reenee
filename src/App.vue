@@ -7,11 +7,15 @@
 <script setup lang="ts">
 import { computed, onMounted, watch } from "vue";
 import { useRouter } from "vue-router";
+import { getReeneeState, setReeneeState } from "./helpers/state";
 import { useAppStore } from "./helpers/stores/AppStore";
 import { useGroupStore } from "./helpers/stores/GroupStore";
-import { Group } from "./helpers/model/group";
+import { REENEE_MODULES } from "./modules";
 
 const defaultLayout = "default";
+
+// Run module root component setup code
+REENEE_MODULES.forEach((mod) => mod.onRootSetup?.());
 
 const { currentRoute } = useRouter();
 
@@ -24,33 +28,13 @@ const appStore = useAppStore();
 watch(
   appStore.$state,
   (state) => {
-    console.log(state);
-    localStorage.setItem("__reenee_state", JSON.stringify(state));
+    setReeneeState(state);
   },
   { deep: true }
 );
 
 onMounted(() => {
   const state = getReeneeState();
-  appStore.setGroups(state?.groups || []);
-  appStore.setCurrentGroupId(
-    state?.currentGroupId || state?.groups[0]?.id || null
-  );
-
-  if (state?.groups) {
-    const currentGroup = state.groups.find(
-      (group: Group) => group.id === state.currentGroupId
-    );
-    groupStore.setGroup(currentGroup);
-  }
+  appStore.initialize(state);
 });
-
-const getReeneeState = () => {
-  const groups = localStorage.getItem("__reenee_state");
-  console.log(groups);
-  if (groups) {
-    return JSON.parse(groups);
-  }
-  return {};
-};
 </script>

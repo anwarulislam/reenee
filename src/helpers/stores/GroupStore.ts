@@ -20,10 +20,8 @@ export const useGroupStore = defineStore({
     },
     addMember(member: Member) {
       this.members.push(member);
-      console.log("addMember", this.members);
     },
     deleteMember(id: string) {
-      console.log(id);
       this.members = this.members.filter((m) => m.id !== id);
     },
   },

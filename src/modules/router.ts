@@ -46,11 +46,11 @@ export default <ReeneeModule>{
       routes,
     });
 
-    router.beforeEach((to, from) => {
+    router.beforeEach((to, from, next) => {
       _isLoadingInitialRoute.value = isInitialRoute(from);
 
       REENEE_MODULES.forEach((mod) => {
-        mod.onBeforeRouteChange?.(to, from, router);
+        mod.onBeforeRouteChange?.(to, from, next, router);
       });
     });
 
@@ -59,8 +59,6 @@ export default <ReeneeModule>{
     // subbed to
     router.afterEach((to) => {
       // we can track here
-
-      console.log(to);
 
       _isLoadingInitialRoute.value = false;
 

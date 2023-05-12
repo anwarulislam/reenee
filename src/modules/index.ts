@@ -1,5 +1,9 @@
 import { App } from "vue";
-import { RouteLocationNormalized, Router } from "vue-router";
+import {
+  NavigationGuardNext,
+  RouteLocationNormalized,
+  Router,
+} from "vue-router";
 
 export type ReeneeModule = {
   /**
@@ -31,6 +35,7 @@ export type ReeneeModule = {
   onBeforeRouteChange?: (
     to: RouteLocationNormalized,
     from: RouteLocationNormalized,
+    next: NavigationGuardNext,
     router: Router
   ) => void;
 
