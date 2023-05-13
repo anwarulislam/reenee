@@ -1,33 +1,72 @@
 <template>
-  <form @submit.prevent="addTransaction">
+  <form>
+    <label for="trdetail">Title</label>
     <input
+      id="trdetail"
       v-model="transactionDetail"
       type="text"
       placeholder="Enter details"
     />
-    <input v-model="amount" type="text" placeholder="Enter amount" />
 
-    <button type="submit">Add</button>
+    <label for="amount">Amount</label>
+    <input
+      v-model="amount"
+      id="amount"
+      type="text"
+      placeholder="Enter amount"
+    />
+
+    <label for="paidby">Paid By</label>
+
+    <select id="paidby" v-model="paidBy">
+      <option v-for="member in members" :value="member.id">
+        {{ member.name }}
+      </option>
+    </select>
+
+    <ul>
+      <li v-for="member in members">
+        {{ member.name }} - {{ amount && amount / members.length }}
+      </li>
+    </ul>
+
+    <button type="button" @click.prevent="addTransaction">Add</button>
   </form>
 </template>
 
 <script setup lang="ts">
 import { ref } from "vue";
-import { useGroupStore } from "@helpers/stores/GroupStore";
+import { useGroupStore } from "./../../../../helpers/stores/GroupStore";
+import { storeToRefs } from "pinia";
+import { Transaction } from "./../../../../helpers/model/transaction";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 
 const groupStore = useGroupStore();
+const { members } = storeToRefs(groupStore);
 
-const transactionDetail = ref("");
-const amount = ref(0);
+const transactionDetail = ref("new transaction");
+const amount = ref(30);
+const paidBy = ref("");
 
 const addTransaction = () => {
-  if (!transactionDetail.value) return alert("Please enter a name");
-
-  const member = {
-    name: transactionDetail.value,
+  const transaction: Transaction = {
+    amount: amount.value,
+    date: Date.now(),
     id: Date.now().toString(),
+    paidBy: [paidBy.value],
+    paidByAmounts: [amount.value],
+    paidFor: members.value.map((m) => m.id),
+    paidForAmounts: members.value.map(
+      (m) => amount.value / members.value.length
+    ),
+    title: transactionDetail.value,
+    description: transactionDetail.value,
   };
 
-  groupStore.addMember(member);
+  groupStore.addTransaction(transaction);
+
+  router.push("/");
 };
 </script>

@@ -30,5 +30,8 @@ export const useGroupStore = defineStore({
       console.log(this.members.find((m) => m.id == id));
       return this.members.find((m) => m.id == id)!;
     },
+    addTransaction(transaction: Transaction) {
+      this.transactions.push(transaction);
+    },
   },
 });
