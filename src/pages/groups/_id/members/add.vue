@@ -27,6 +27,7 @@ const addMember = () => {
   const member = {
     name: memberName.value,
     id: Date.now().toString(),
+    balance: 0,
   };
 
   groupStore.addMember(member);

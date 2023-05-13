@@ -3,4 +3,5 @@ export type Member = {
   name: string;
   mobile?: string;
   email?: string;
+  balance: number;
 };

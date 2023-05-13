@@ -14,8 +14,7 @@
           v-for="member in group.members"
           :key="member.id"
           :groupId="groupId"
-          :pid="member.id"
-          :name="member.name"
+          :person="member"
         />
       </Persons>
     </div>

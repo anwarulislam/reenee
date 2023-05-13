@@ -25,8 +25,9 @@
     </select>
 
     <ul>
-      <li v-for="member in members">
-        {{ member.name }} - {{ amount && amount / members.length }}
+      <li v-for="member in paidFor">
+        {{ member.name }} -
+        <input type="text" v-model="member.amount" style="display: inline" />
       </li>
     </ul>
 
@@ -49,18 +50,23 @@ const { members } = storeToRefs(groupStore);
 const transactionDetail = ref("new transaction");
 const amount = ref(30);
 const paidBy = ref("");
+const paidFor = ref(
+  members.value.map((m) => ({
+    ...m,
+    amount: amount.value / members.value.length,
+  }))
+);
 
 const addTransaction = () => {
   const transaction: Transaction = {
     amount: amount.value,
     date: Date.now(),
     id: Date.now().toString(),
-    paidBy: [paidBy.value],
-    paidByAmounts: [amount.value],
-    paidFor: members.value.map((m) => m.id),
-    paidForAmounts: members.value.map(
-      (m) => amount.value / members.value.length
-    ),
+    paidBy: [{ id: paidBy.value, amount: amount.value }],
+    paidFor: members.value.map((m) => ({
+      id: m.id,
+      amount: amount.value / members.value.length,
+    })),
     title: transactionDetail.value,
     description: transactionDetail.value,
   };

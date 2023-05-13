@@ -4,10 +4,13 @@ export type Transaction = {
   description?: string;
   date: number;
   amount: number;
-  paidBy: string[];
-  paidByAmounts: number[];
-  paidFor: string[];
-  paidForAmounts: number[];
+  paidBy: Payment[];
+  paidFor: Payment[];
+};
+
+export type Payment = {
+  id: string;
+  amount: number;
 };
 
 // dummy data
